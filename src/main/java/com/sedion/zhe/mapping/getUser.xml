@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sedion.zhe.dao.userDao">
+
+
+   <!-- 修改xml一定要重启才能生效 -->
+   <!-- 结果封装 （映射）-->
+   <!--  type=UserBean(Mybatis-config.xml别名)   com.sedion.zhe.bean.UserBean -->
+   <!-- column是查询的列 -->
+   <!-- property对象属性 -->
+	<resultMap type="UserBean" id="UserResult">
+		<id column="id"  property="id" />
+		<result column="useraccound"  property="userAccount" />
+		<result column="userpsw"      property="userpsw" />
+		<result column="userbirth"    property="userBirth" />
+			
+		<result column="usersex"   jdbcType="INTEGER" property="userSex" />
+		<result column="userhead"  jdbcType="VARCHAR" property="userhead" />
+	</resultMap>
+	
+	
+	
+	<resultMap type="UserBean" id="jier">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="useraccound" jdbcType="VARCHAR" property="userAccount" />
+		<result column="userpsw" jdbcType="VARCHAR" property="userpsw" />
+		<result column="userbirth" jdbcType="VARCHAR" property="userBirth" />
+		<result column="usersex" jdbcType="INTEGER" property="userSex" />
+		<result column="userhead" jdbcType="VARCHAR" property="userhead" />
+	</resultMap>
+
+    <!-- 根据账号查询用户是否存在 -->
+    <!-- id对应方法名 -->
+    <!-- resultMap对应查询返回的值再组装成对象 -->
+    <!-- parameterType传入的查询条件参数 -->
+    <!-- #{}  ？ -->
+	<select id="getUser" resultMap="UserResult" parameterType="string">
+		select * from   test1 where useraccound =     #{useraccount}
+	</select>
+	
+	
+	
+	
+	<select id="getUserbyId" resultMap="UserResult" parameterType="int">
+		select id, useraccound, userpsw, userbirth, usersex, userhead from
+		test1 where id = #{userId}
+	</select>
+	<update id="uploadHead">
+		UPDATE test1 SET userhead= #{userhead} WHERE id= #{userId}
+	</update>
+
+	<insert id="insertUser" parameterType="com.sedion.zhe.bean.UserBean" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO test1(useraccound,userpsw,userbirth,userhead,useremail,usersex) 
+		values(#{userAccount},#{userpsw},#{userBirth},#{userhead},#{userEmail},#{userSex});		
+	</insert>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sedion.zhe.dao.pageDao">
+	<resultMap type="BBSMessageBean" id="bbsResult">
+		<id column="id" javaType="int" property="bbsId"/>
+		<result column="username" jdbcType="VARCHAR" property="userAccount"/>
+		<result column="userbbs" jdbcType="VARCHAR" property="userBBS"/>
+		<result column="bbstilte" jdbcType="VARCHAR" property="bbsTitle"/>
+		<result column="data" jdbcType="VARCHAR" property="data"/>
+	</resultMap>
+<!-- 	<resultMap type="PageBean" id="pageResult">
+		<result javaType="int" property="totalRow"/>
+	</resultMap> -->
+	<select id="getPageMessage" parameterType="Integer" resultMap="bbsResult">
+		SELECT * FROM BBS WHERE id BETWEEN (#{currentPage}-1)*#{pageSize}+1 AND (#{currentPage})*#{pageSize};
+	</select>
+	<select id="getTotalRow"  resultType="INTEGER">
+		SELECT count(*) FROM BBS;
+	</select>
+</mapper>

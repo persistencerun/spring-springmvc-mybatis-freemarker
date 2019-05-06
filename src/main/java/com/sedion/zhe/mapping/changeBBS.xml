@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sedion.zhe.dao.bbsDao">
+    <resultMap type="BBSMessageBean" id="bbsResult">
+        <id column="id" javaType="int" property="bbsId"/>
+        <result column="username" jdbcType="VARCHAR" property="userAccount"/>
+        <result column="USERBBS" jdbcType="VARCHAR" property="userBBS"/>
+        <result column="bbstilte" jdbcType="VARCHAR" property="bbsTitle"/>
+        <result column="data" jdbcType="VARCHAR" property="data"/>
+    </resultMap>
+    <select id="getBBSbyId"  resultMap="bbsResult" parameterType="INTEGER">
+        SELECT * FROM BBS WHERE id = #{0};
+    </select>
+    	<update id="updateBBS">
+		UPDATE bbs SET USERBBS= #{bean.userBBS}, bbstilte= #{bean.bbsTitle}, data = #{bean.data} WHERE id= #{bean.bbsId}
+	</update>
+</mapper>
